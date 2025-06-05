@@ -20,11 +20,17 @@ pipeline {
             }
         }
         
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
+    stage('Checkout') {
+        steps {
+            checkout([
+                $class: 'GitSCM',
+                branches: [[name: '*/main']],
+                userRemoteConfigs: [[
+                    url: 'https://github.com/orion2182/vue.git'  // Tanpa credentials
+                ]]
+            ])
         }
+    }
         
         stage('Install PHP Dependencies') {
             steps {
